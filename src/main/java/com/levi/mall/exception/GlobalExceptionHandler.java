@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public Object handlerException(MallException e) {
         log.error("Mall Exception",e);
-        return ApiRestResponse.error(e.getCode(),e.getMsg());
+        return ApiRestResponse.error(e.getCode(),e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

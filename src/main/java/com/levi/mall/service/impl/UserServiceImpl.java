@@ -59,8 +59,13 @@ public class UserServiceImpl implements UserService {
      * @throws NoSuchAlgorithmException
      */
     @Override
-    public User login(String username, String password) throws MallException, NoSuchAlgorithmException {
-        String md5Password = MD5Utils.getMD5Str(password);
+    public User login(String username, String password) throws MallException {
+        String md5Password = null;
+        try {
+            md5Password = MD5Utils.getMD5Str(password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         User user = userMapper.selectLogin(username, md5Password);
         if (user == null) {
             throw new MallException(MallExceptionEnum.PASSWORD_ERROR);
@@ -90,10 +95,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Boolean checkAdminRole(User user) {
-        if (user.getRole().equals(2)) {
-            return true;
-        } else {
-            return false;
-        }
+        return user.getRole().equals(2);
     }
 }

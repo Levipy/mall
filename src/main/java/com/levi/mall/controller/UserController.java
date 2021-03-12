@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 
-@Controller
+@RestController
 public class UserController {
     @Autowired
     private UserService userService;
     @ApiOperation("测试项目打通")
-    @ResponseBody
     @GetMapping("/test")
     public User personalPage() {
         return userService.getUser();
@@ -28,16 +27,15 @@ public class UserController {
 
     /**
      * 用户注册接口
-     * @param username
+     * @param userName
      * @param password
      * @return
      * @throws MallException
      */
     @ApiOperation("用户注册")
     @PostMapping("/register")
-    @ResponseBody
-    public ApiRestResponse regist(@RequestParam("username") String username, @RequestParam("password") String password) throws MallException {
-        if (StringUtils.isEmpty(username)) {
+    public ApiRestResponse regist(@RequestParam String userName, @RequestParam String password) throws MallException {
+        if (StringUtils.isEmpty(userName)) {
             return ApiRestResponse.error( MallExceptionEnum.NEED_USER_NAME);
         }
         if (StringUtils.isEmpty(password)) {
@@ -46,30 +44,26 @@ public class UserController {
         if (password.length()<8) {
             return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD_LENGTH_8);
         }
-        userService.regist(username,password);
+        userService.regist(userName,password);
         return ApiRestResponse.success();
     }
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    @ResponseBody
-    public ApiRestResponse longin(@RequestParam String username, @RequestParam String password, HttpSession session) throws NoSuchAlgorithmException, MallException {
-        if (StringUtils.isEmpty(username)) {
+    public ApiRestResponse longin(@RequestParam String userName, @RequestParam String password,
+                                  HttpSession session) throws NoSuchAlgorithmException, MallException {
+        if (StringUtils.isEmpty(userName)) {
             return ApiRestResponse.error( MallExceptionEnum.NEED_USER_NAME);
         }
         if (StringUtils.isEmpty(password)) {
             return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD);
         }
-        if (password.length()<8) {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD_LENGTH_8);
-        }
-        User user = userService.login(username, password);
+        User user = userService.login(userName, password);
         user.setPassword("********");
         session.setAttribute(Constant.MALL_USER, user);
         return  ApiRestResponse.success(user);
     }
     @ApiOperation("用户修改个签")
-    @PostMapping("/updateSignature")
-    @ResponseBody
+    @PostMapping("/user/update")
     public ApiRestResponse updateSignature(HttpSession session, String signature) throws MallException {
         User current_user = (User) session.getAttribute(Constant.MALL_USER);
         System.out.println(current_user);
@@ -90,8 +84,7 @@ public class UserController {
      * @return
      */
     @ApiOperation("用户登出")
-    @PostMapping("/logout")
-    @ResponseBody
+    @PostMapping("/user/logout")
     public ApiRestResponse userLogout(HttpSession session) {
         session.removeAttribute(Constant.MALL_USER);
         return ApiRestResponse.success();
@@ -99,33 +92,31 @@ public class UserController {
 
     /**
      * 管理员登录接口
-     * @param username
+     * @param userName
      * @param password
      * @param session
      * @return
      * @throws MallException
+     *  .,m;l,;l;l
      * @throws NoSuchAlgorithmException
      */
     @ApiOperation("管理员登录")
     @PostMapping("/adminLogin")
-    @ResponseBody
-    public ApiRestResponse checkedAdminLogin(@RequestParam("username")String username, @RequestParam("password") String password,HttpSession session) throws MallException, NoSuchAlgorithmException {
-        if (StringUtils.isEmpty(username)) {
+    public ApiRestResponse checkedAdminLogin(@RequestParam String userName, @RequestParam String password
+            ,HttpSession session) throws MallException{
+        if (StringUtils.isEmpty(userName)) {
             return ApiRestResponse.error( MallExceptionEnum.NEED_USER_NAME);
         }
         if (StringUtils.isEmpty(password)) {
             return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD);
         }
-        if (password.length()<8) {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD_LENGTH_8);
-        }
-        User user = userService.login(username, password);
+        User user = userService.login(userName, password);
 
         if (userService.checkAdminRole(user)) {
             //true说明是管理员
             user.setPassword("********");
             session.setAttribute(Constant.MALL_USER,user);
-            return ApiRestResponse.success();
+            return ApiRestResponse.success(user);
         }else {
             return ApiRestResponse.error(MallExceptionEnum.NOT_ADMIN);
         }

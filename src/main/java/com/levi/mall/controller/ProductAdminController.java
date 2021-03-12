@@ -43,7 +43,7 @@ public class ProductAdminController {
     }
 
     @ApiOperation("上传图片")
-    @PostMapping("/admin/product/uploafile")
+    @PostMapping("/admin/upload/file")
     public ApiRestResponse upload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
         String filename = file.getOriginalFilename();
         //获取文件名后缀
@@ -74,17 +74,6 @@ public class ProductAdminController {
         }
     }
 
-
-    /*private URI getHost(URI uri) {
-        URI effectiveUri;
-        try {
-            effectiveUri = new URI(uri.getScheme(), uri.getUserInfo(),uri.getHost(), uri.getPort(),  null,null,null);
-        } catch (URISyntaxException e) {
-            effectiveUri = null;
-        }
-        return effectiveUri;
-    }*/
-
     @ApiOperation("修改商品信息")
     @PostMapping("/admin/product/update")
     public ApiRestResponse updateProduct(@Valid @RequestBody UpdateProductReq updateProductReq) {
@@ -102,14 +91,14 @@ public class ProductAdminController {
     }
 
     @ApiOperation("批量上下架商品")
-    @PostMapping("/admin/product/batchUpdateStatus")
+    @PostMapping("/admin/product/batchUpdateSellStatus")
     public ApiRestResponse batchUpdateStatus(@RequestParam("ids") Integer[] ids,@RequestParam("status") Integer status) {
         productService.batchUpdateStatus(ids, status);
         return ApiRestResponse.success();
     }
 
     @ApiOperation("后台商品信息列表")
-    @PostMapping("/admin/product/listForAdmin")
+    @PostMapping("/admin/product/list")
     public ApiRestResponse productListForAdmin(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize")Integer pageSize) {
         PageInfo<Product> pageInfo = productService.productListForAdmin(pageNum, pageSize);
         return ApiRestResponse.success(pageInfo);

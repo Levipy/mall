@@ -218,4 +218,25 @@
     and order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectAllByUserId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from imooc_mall_order
+    where user_id = #{userId}
+    order by create_time desc
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from imooc_mall_order
+    where order_status != 0
+  </select>
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from imooc_mall_order
+    where order_no = #{orderNo}
+  </select>
+
 </mapper>

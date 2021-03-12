@@ -27,7 +27,7 @@ public interface UserService {
      * @throws MallException
      * @throws NoSuchAlgorithmException
      */
-    User login(String username, String password) throws NoSuchAlgorithmException, MallException;
+    User login(String username, String password) throws  MallException;
 
     /**
      * 用户修改个性签名

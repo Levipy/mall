@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @ApiModel
 @Data
-public class Product {
+public class Product implements Serializable{
     private Integer id;
 
     private String name;

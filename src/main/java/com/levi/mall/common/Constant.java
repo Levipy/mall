@@ -79,7 +79,7 @@ public class Constant {
         private int code;
         private String message;
 
-        public OrderStatusEnum getOrderStatusEnum(Integer code) {
+        public static OrderStatusEnum getOrderStatusEnum(Integer code) {
             for (OrderStatusEnum orderStatusEnum : values()) {
                 if (orderStatusEnum.getCode() == code) {
                     return orderStatusEnum;

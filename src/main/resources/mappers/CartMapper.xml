@@ -131,7 +131,7 @@
     c.user_id as userId,
     p.name as productName,
     p.price as productPrice,
-    p.image as productImage
+    p.image as productImg
     from imooc_mall_cart c
     left join imooc_mall_product p on p.id = c.product_id
     where c.user_id = #{userId}

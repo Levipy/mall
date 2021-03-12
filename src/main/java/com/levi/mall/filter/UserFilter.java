@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  */
 public class UserFilter implements Filter {
 
-    public static User currentUser;
+    public static User currentUser = new User();
 
 
     @Override
@@ -49,7 +49,6 @@ public class UserFilter implements Filter {
             return;
         }
         filterChain.doFilter(servletRequest,servletResponse);
-        System.out.println("继续往下执行");
     }
 
     @Override

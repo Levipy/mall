@@ -1,7 +1,10 @@
 package com.levi.mall.dao;
 
 import com.levi.mall.entity.Order;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface OrderMapper {
@@ -18,4 +21,11 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     Order selectByOrderNoAndUserId(String orderNo, Integer userId);
+
+    List<Order> selectAllByUserId(Integer userId);
+
+    List<Order> selectAll();
+
+    Order selectByOrderNo(String orderNo);
+
 }

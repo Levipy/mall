@@ -40,6 +40,12 @@ public enum MallExceptionEnum {
     CART_IS_NULL(10018, "你的购物车为空"),
     NO_ENUM(10019, "未找到对应的枚举类"),
     ANOTHER_ERROR(10020, "不可控因素"),
+    NO_ORDER(10021, "不存在订单"),
+    CANCEL_FAILED(10022, "订单取消失败"),
+    ORDER_STATUS_ERROR(10023,"订单状态异常"),
+    NOT_PAID(10024,"订单未付款"),
+    NOT_DELIVERY(10025, "未发货不能完结订单"),
+    NOT_YOUR_ORDER(10026, "不是你的订单"),
 
 
 

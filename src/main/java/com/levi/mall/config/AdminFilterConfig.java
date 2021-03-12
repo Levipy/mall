@@ -24,9 +24,10 @@ public class AdminFilterConfig {
     public FilterRegistrationBean adminFilterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(adminFilter());
-        filterRegistrationBean.addUrlPatterns("/admin/category/*");
+        filterRegistrationBean.addUrlPatterns("/admin/category/**");
         filterRegistrationBean.addUrlPatterns("/admin/product/*");
         filterRegistrationBean.addUrlPatterns("/admin/order/*");
+        filterRegistrationBean.setName("adminFilterConf");
         return filterRegistrationBean;
     }
 }

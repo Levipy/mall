@@ -1,7 +1,9 @@
 package com.levi.mall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.levi.mall.entity.Order;
 import com.levi.mall.request.CreateOrderReq;
+import com.levi.mall.vo.OrderVO;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,4 +20,21 @@ public interface OrderService {
      * @return
      */
     Order createOrder(CreateOrderReq createOrderReq);
+
+    OrderVO detail(String orderNo);
+
+    PageInfo list(Integer pageNum, Integer pageSize);
+
+    void cancel(String orderNo);
+
+    String qrCode(String orderNo);
+
+    PageInfo adminList(Integer pageNum, Integer pageSize);
+
+    void orderPay(String orderNo);
+
+    void deliveryOrder(String orderNo);
+
+    void finish(String orderNo);
+
 }
